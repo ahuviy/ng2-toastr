@@ -42,9 +42,14 @@ export class ToastsManager {
           }
         }
 
+        // apply caller options to default ToastContainer options
+        let currentContainerOptions = Object.assign({}, this.options);
+        options['positionClass'] && (currentContainerOptions.positionClass = options['positionClass']);
+        options['animate'] && (currentContainerOptions.animate = options['animate']);
+
         // get options providers
         let providers = ReflectiveInjector.resolve([
-          {provide: ToastOptions, useValue: this.options }
+            { provide: ToastOptions, useValue: currentContainerOptions }
         ]);
 
         // create and load ToastContainer
